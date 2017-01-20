@@ -1,0 +1,32 @@
+[core]
+	excludesfile = /Users/jdirkx/.global_ignore
+[log]
+  decorate = full
+[user]
+  name = Josh Dirkx
+  email = jdirkx@truecar.com
+[filter "lfs"]
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
+  required = true
+[color]
+  ui = on
+  interactive = auto
+[color.branch]
+  current = green bold
+  local = green
+  remote = magenta bold
+  plain = white bold
+[alias]
+  h = !"awk '/^[[]alias[]]/ { emit=1 } ! /^[[]/ { if(emit) { sub(/^[ \t]*/, \"\"); print; } } /^[[]/ && ! /^[[]alias[]]/ { if(emit) {exit}}' ~/.gitconfig | grep -v '^h ='""']]'"
+  save = !git add -A && git commit -m "SAVEPOINT"
+  undo = reset HEAD~1 --mixed
+  amend = commit -a --amend
+  ff = pull --ff-only --verbose
+  sv = "!f() { git stash show -p stash@{$1}; }; f"
+  sa = "!f() { git stash apply stash@{$1}; }; f"
+  sd = "!f() { git stash drop stash@{$1}; }; f"
+[push]
+  default = simple
+[credential]
+	helper = osxkeychain
