@@ -21,6 +21,7 @@ if defined?(::Rails) && Rails.env
     require 'awesome_print'
 
     FactoryGirl.find_definitions
+    include FactoryGirl::Syntax::Methods
     AwesomePrint.pry!
   rescue LoadError => e
     puts "Missing dependency: #{e}"
@@ -28,30 +29,33 @@ if defined?(::Rails) && Rails.env
 
   # Helpers
 
-  def quick_array
-    (1..10).to_a
+  module PryHelpers
+    def quick_array
+      (1..10).to_a
+    end
+
+    def quick_hash
+      {
+        foo: :bar,
+        bar: :foo,
+        hello: 'world'
+      }
+    end
   end
 
-  def quick_hash
-    {
-      foo: :bar,
-      bar: :foo,
-      hello: 'world'
-    }
-  end
-
-  def factory_syntax
-    include FactoryGirl::Syntax::Methods
-  end
+  include PryHelpers
 
   def pry_help
-    puts "-- helpers --"
-    puts "quick_array    |   [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
-    puts "quick_hash     |   { foo: :bar, bar: :foo, hello: 'world' }"
-    puts "factory_syntax |   `include FactoryGirl::Syntax::Methods`"
-    ""
+    puts "-- PryHelpers#instance_methods --"
+    PryHelpers.instance_methods.each do |m|
+      puts "method: #{m}"
+      puts "output: `#{PryHelpers.send(m)}`"
+      puts
+    end
+    puts
   end
 
-  puts "loaded ~/.pryrc"
+  puts "loaded #{Rails.root.join}/.pryrc"
   puts "call `pry_help` to see helper methods and aliases"
+  puts
 end
