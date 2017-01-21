@@ -16,13 +16,25 @@ if defined?(::Rails) && Rails.env
     Pry.commands.alias_command 'ww', 'whereami'
   end
 
-  begin
-    require 'factory_girl'
-    require 'awesome_print'
+  GEM_DEPENDENCIES = [
+    {
+      name: 'factory_girl',
+      include: 'FactoryGirl::Syntax::Methods',
+      load: 'FactoryGirl.find_definitions'
+    },
+    {
+      name: 'awesome_print',
+      include: nil,
+      load: 'AwesomePrint.pry!'
+    }
+  ]
 
-    FactoryGirl.find_definitions
-    include FactoryGirl::Syntax::Methods
-    AwesomePrint.pry!
+  begin
+    GEM_DEPENDENCIES.each do |gem|
+      require "#{gem[:name]}"
+      include Object.const_get("#{gem[:include]}") if gem[:include]
+      gem[:load]
+    end
   rescue LoadError => e
     puts "Missing dependency: #{e}"
   end
@@ -55,7 +67,8 @@ if defined?(::Rails) && Rails.env
     puts
   end
 
-  puts "loaded #{Rails.root.join}/.pryrc"
+  puts "loaded ~/.pryrc"
+  puts "dependencies: #{GEM_DEPENDENCIES.map { |g| g[:name] }.join(' | ')}"
   puts "call `pry_help` to see helper methods and aliases"
   puts
 end
