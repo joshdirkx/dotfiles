@@ -1,6 +1,50 @@
 #!/usr/bin/env ruby
 
 if defined?(::Rails) && Rails.env
+  load_start = Time.now
+
+  class String
+    def red
+      "\e[31m#{self}\e[0m"
+    end
+  end
+
+  module PryHelpers
+    class Gem
+      attr_accessor :name, :load, :include
+
+      def initialize(options = {})
+        options.each { |attr, value| send("#{attr}=", value) }
+      end
+    end
+
+    def quick_array
+      (1..10).to_a
+    end
+
+    def quick_hash
+      {
+        foo: :bar,
+        bar: :foo,
+        hello: 'world'
+      }
+    end
+  end
+
+  [
+    {
+      name: 'factory_girl',
+      include: 'FactoryGirl::Syntax::Methods',
+      load: 'FactoryGirl.find_definitions'
+    },
+    {
+      name: 'awesome_print',
+      include: nil,
+      load: 'AwesomePrint.pry!'
+    }
+  ].each do |options|
+    PryHelpers::Gem.new(options)
+  end
 
   Pry.config.color = true
 
@@ -16,59 +60,33 @@ if defined?(::Rails) && Rails.env
     Pry.commands.alias_command 'ww', 'whereami'
   end
 
-  GEM_DEPENDENCIES = [
-    {
-      name: 'factory_girl',
-      include: 'FactoryGirl::Syntax::Methods',
-      load: 'FactoryGirl.find_definitions'
-    },
-    {
-      name: 'awesome_print',
-      include: nil,
-      load: 'AwesomePrint.pry!'
-    }
-  ]
+  LOADED_GEMS = ObjectSpace.each_object(PryHelpers::Gem)
 
   begin
-    GEM_DEPENDENCIES.each do |gem|
-      require "#{gem[:name]}"
-      include Object.const_get("#{gem[:include]}") if gem[:include]
-      gem[:load]
+    LOADED_GEMS.each do |gem|
+      require "#{gem.name}"
+      include Object.const_get("#{gem.include}") if gem.include
+      gem.load
     end
-  rescue LoadError => e
-    puts "Missing dependency: #{e}"
+  rescue LoadError => err
+    puts "Missing dependency: #{err}"
+  ensure
+    include PryHelpers
   end
-
-  # Helpers
-
-  module PryHelpers
-    def quick_array
-      (1..10).to_a
-    end
-
-    def quick_hash
-      {
-        foo: :bar,
-        bar: :foo,
-        hello: 'world'
-      }
-    end
-  end
-
-  include PryHelpers
 
   def pry_help
     puts "-- PryHelpers#instance_methods --"
-    PryHelpers.instance_methods.each do |m|
-      puts "method: #{m}"
-      puts "output: `#{PryHelpers.send(m)}`"
+    PryHelpers.instance_methods.each do |method|
+      puts "method: #{method}"
+      puts "output: `#{PryHelpers.send(method)}`"
       puts
     end
-    puts
+    nil
   end
 
-  puts "loaded ~/.pryrc"
-  puts "dependencies: #{GEM_DEPENDENCIES.map { |g| g[:name] }.join(' | ')}"
-  puts "call `pry_help` to see helper methods and aliases"
+  puts
+  puts "~/.pryrc loaded in " + "#{Time.now - load_start}".red
+  puts "dependencies: " + "#{LOADED_GEMS.map(&:name).join(', ')}".red
+  puts "call " + "`pry_help`".red + " to see helper methods and aliases"
   puts
 end
