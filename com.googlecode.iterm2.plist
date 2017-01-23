@@ -3376,9 +3376,9 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>314 275 796 473 0 0 1920 1200 </string>
+	<string>314 319 796 473 0 0 1920 1200 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 44 690 987 0 0 1920 1177 </string>
+	<string>0 4 690 987 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>247 132 570 452 0 0 1920 1177 </string>
 	<key>NeverWarnAboutShortLivedSessions_AA1712B5-5E68-400B-BDAD-3110B4D24542</key>
@@ -5007,9 +5007,9 @@
 	<key>SwitchWindowModifier</key>
 	<integer>5</integer>
 	<key>TabStyle</key>
-	<integer>2</integer>
-	<key>TabViewType</key>
 	<integer>0</integer>
+	<key>TabViewType</key>
+	<integer>1</integer>
 	<key>ThreeFingerEmulates</key>
 	<false/>
 	<key>TmuxDashboardLimit</key>
