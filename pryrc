@@ -35,12 +35,12 @@ if defined?(::Rails) && Rails.env
     {
       name: 'factory_girl',
       include: 'FactoryGirl::Syntax::Methods',
-      load: 'FactoryGirl.find_definitions'
+      load: 'find_definitions'
     },
     {
       name: 'awesome_print',
       include: nil,
-      load: 'AwesomePrint.pry!'
+      load: 'pry!'
     }
   ].each do |options|
     PryHelpers::Gem.new(options)
@@ -65,8 +65,8 @@ if defined?(::Rails) && Rails.env
   begin
     LOADED_GEMS.each do |gem|
       require "#{gem.name}"
-      include Object.const_get("#{gem.include}") if gem.include
-      gem.load
+      include Object.const_get(gem.include) if gem.include
+      Object.const_get(gem.name.camelcase).send(gem.load) if gem.load
     end
   rescue LoadError => err
     puts "Missing dependency: #{err}"
