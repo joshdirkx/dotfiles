@@ -1,4 +1,4 @@
-ZSH_THEME="sorin"
+ZSH_THEME="crunch"
 COMPLETION_WAITING_DOTS="true"
 export EDITOR='vim'
 plugins=(git autojump git-flow-completion)
