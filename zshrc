@@ -9,9 +9,6 @@ PATH=$PATH:$GOPATH/bin
 ZSH=$HOME/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
-# push to current branch name upstream
-alias gpub='git push --set-upstream origin $(current_branch)'
-
 # run rspec with bundle exec preprended
 alias brspec="bundle exec rspec"
 
