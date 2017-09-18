@@ -3817,11 +3817,11 @@
 	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
 	<string>1412 950 616 174 0 0 3440 1440 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
-	<string>400 184 606 456 0 0 2560 1440 </string>
+	<string>580 184 606 469 0 0 3440 1440 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>2357 642 796 473 0 0 3440 1440 </string>
+	<string>1002 488 796 473 0 0 1920 1200 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>461 78 690 1131 0 0 3440 1440 </string>
+	<string>3 28 954 1172 0 0 2560 1440 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>248 124 885 586 0 0 1920 1177 </string>
 	<key>NeverWarnAboutShortLivedSessions_AA1712B5-5E68-400B-BDAD-3110B4D24542</key>
@@ -5446,7 +5446,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-08-25T15:20:10Z</date>
+	<date>2017-09-18T14:18:23Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>ShowBookmarkName</key>
