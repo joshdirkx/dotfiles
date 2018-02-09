@@ -17,3 +17,6 @@ eval `docker-machine env 2>/dev/null`
 
 export PATH="$PATH:$HOME/.rvm/bin"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# correcting tmux vim coloring
+alias tmux="tmux -2"
