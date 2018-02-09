@@ -2,9 +2,10 @@ ZSH_THEME="crunch"
 COMPLETION_WAITING_DOTS="true"
 export EDITOR='vim'
 plugins=(git autojump git-flow-completion)
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export GOPATH=$HOME/Code/go
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 PATH=$PATH:$GOPATH/bin
+PATH=$PATH:$HOME/.cargo/bin
 
 ZSH=$HOME/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
