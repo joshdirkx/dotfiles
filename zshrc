@@ -21,3 +21,5 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 # correcting tmux vim coloring
 alias tmux="tmux -2"
+
+alias dc="docker-compose"
